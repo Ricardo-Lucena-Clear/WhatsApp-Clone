@@ -174,6 +174,28 @@ elemetsProtoType(){
            this.closeRecordMicrophone();
             
         })
+        this.el.inputText.on('keypress', e=>{
+            if (e.key === 'Enter' && !e.ctrlKey){
+                e.preventDefault();
+                this.el.btnSend.click();
+            }
+
+        })
+        this.el.inputText.on('keyup', e=>{
+            if (this.el.inputText.innerHTML.length){
+
+                this.el.inputPlaceholder.hide();
+                this.el.btnSendMicrophone.hide();
+                this.el.btnSend.show();
+            } else{
+                this.el.inputPlaceholder.show();
+                this.el.btnSendMicrophone.show();
+                this.el.btnSend.hide();
+            }
+        })
+        this.el.btnSend.on('click', e=>{
+            console.log(this.el.inputText.innerHTML);
+        })
     }
     startRecordMicrophoneTime(){
         let start = Date.now();
