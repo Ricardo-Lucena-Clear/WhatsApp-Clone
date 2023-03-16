@@ -52,6 +52,16 @@ elemetsProtoType(){
     Element.prototype.hasClass = function (name){
        return this.classList.contains(name);
     }
+    HTMLFormElement.prototype.getForm = function(){
+        return new FormData(this);
+    }
+    HTMLFormElement.prototype.toJSON = function(){
+        let json = {};
+        this.getForm().forEach((value, key)=>{
+            json[key] = value;
+        })
+        return json;
+    }
     }
     initEvents(){
         this.el.myPhoto.on('click', e=>{
@@ -89,6 +99,10 @@ elemetsProtoType(){
         })
         this.el.btnSavePanelEditProfile.on('click', e=>{
             console.log(this.el.inputNamePanelEditProfile.innerHTML);
+        })
+        this.el.formPanelAddContact.on('submit', e=>{
+            e.preventDefault();
+            let formData = new FormData(this.el.formPanelAddContact);
         })
         
     }
