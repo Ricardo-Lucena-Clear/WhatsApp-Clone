@@ -1,6 +1,5 @@
 class WhatsAppController {
     constructor(){
-        console.log('WhatsAppController ok');
         this.elemetsProtoType();
         this.loadElements();
         this.initEvents();
@@ -133,6 +132,7 @@ elemetsProtoType(){
            this.el.panelCamera.css({
                'height':'calc(100% - 120px)'
            })
+           this._camera = new CameraController(this.el.videoCamera);
         })
         this.el.btnClosePanelCamera.on('click', e=>{
           this.closeAllMainPanel();
