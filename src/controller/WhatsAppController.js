@@ -177,6 +177,9 @@ elemetsProtoType(){
         })
         this.el.inputDocument.on ('change', e=>{
             if (this.el.inputDocument.files.length){
+                this.el.panelDocumentPreview.css({
+                    'height':'1%'
+                })
                 let file = this.el.inputDocument.files[0]
                 this._documentPreviewController = new DocumentPreviewController(file);
                 this._documentPreviewController.getPreviewData().then(result=>{
@@ -186,8 +189,14 @@ elemetsProtoType(){
                     this.el.imagePanelDocumentPreview.show();
                     this.el.filePanelDocumentPreview.hide();
 
+                    this.el.panelDocumentPreview.css({
+                        'height':'calc(100% - 120px)'
+                    })
+
                 }).catch(err=>{
-                    console.log(file.type)
+                    this.el.panelDocumentPreview.css({
+                        'height':'calc(100% - 120px)'
+                    })
                     switch(file.type){
                         case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
                             case 'application/msword':
@@ -207,9 +216,10 @@ elemetsProtoType(){
                             default:
                                 this.el.iconPanelDocumentPreview.classList.value = 'jcxhw icon-doc-generic';
                         
-                        this.el.filenamePanelDocumentPreview.innerHTML = file.name;
-                        this.el.imagePanelDocumentPreview.hide();
+                       
                         this.el.filePanelDocumentPreview.show();
+                        this.el.imagePanelDocumentPreview.hide();
+                        this.el.filenamePanelDocumentPreview.innerHTML = file.name;
                         
                         
                     }

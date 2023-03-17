@@ -18,7 +18,13 @@
     "url": "https://github.com/Ricardo-Lucena-Clear/WhatsApp-Clone/issues"
   },
   "homepage": "https://github.com/Ricardo-Lucena-Clear/WhatsApp-Clone#readme",
+  "devDependencies": {
+    "webpack": "^3.1.0",
+    "webpack-dev-server": "^2.5.1",
+    "worker-loader": "^1.1.1"
+  },
   "dependencies": {
+    "pdfjs-dist": "^2.0.489",
     "webpack": "^3.1.0",
     "webpack-dev-server": "^2.5.1"
   }
