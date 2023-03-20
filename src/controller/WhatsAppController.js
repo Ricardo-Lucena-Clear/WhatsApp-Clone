@@ -240,25 +240,25 @@ elemetsProtoType(){
         this.el.btnCloseModalContacts.on('click', e=>{
             this.el.modalContacts.hide();
         })
-        this.el.btnSendMicrophone.on('click', e=>{
+        this.el.btnSendMicrophone.on('click', e=>{ 
             this.el.recordMicrophone.show();
             this.el.btnSendMicrophone.hide();
             this.startRecordMicrophoneTime();
-
             this._microphoneController = new MicrophoneController();
-            this._microphoneController.on('play', musica =>{
-                console.log('play da musica')
-            })
-        })
-        this.el.btnCancelMicrophone.on('click',e=>{
-            this._microphoneController.stop();
+            this._microphoneController.on('ready', musica =>{
+                console.log('ready event');
+                this._microphoneController.startRecorder();
+            });
+        });
+        this.el.btnCancelMicrophone.on('click', e=>{
             this.closeRecordMicrophone();
-
-        })
-        this.el.btnFinishMicrophone.on('click',e=>{
-            this._microphoneController.stop();
-           this.closeRecordMicrophone();
-            
+            this._microphoneController.stopRecorder();
+            this.closeRecordMicrophone();
+        });
+        this.el.btnFinishMicrophone.on('click', e=>{
+            this.closeRecordMicrophone();
+            this._microphoneController.stopRecorder();
+            this.closeRecordMicrophone();
         })
         this.el.inputText.on('keypress', e=>{
             if (e.key === 'Enter' && !e.ctrlKey){
@@ -323,7 +323,7 @@ elemetsProtoType(){
     closeRecordMicrophone(){
         this.el.recordMicrophone.hide();
         this.el.btnSendMicrophone.show();
-        clearInterval(this._recordMicrophoneInterval);
+        clearInterval(this._recordMicrophoneInterval)
     }
     closeAllMainPanel(){
         this.el.panelMessagesContainer.hide();
