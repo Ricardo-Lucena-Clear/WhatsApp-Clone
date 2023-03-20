@@ -246,6 +246,9 @@ elemetsProtoType(){
             this.startRecordMicrophoneTime();
 
             this._microphoneController = new MicrophoneController();
+            this._microphoneController.on('play', musica =>{
+                console.log('play da musica')
+            })
         })
         this.el.btnCancelMicrophone.on('click',e=>{
             this._microphoneController.stop();
