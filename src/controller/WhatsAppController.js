@@ -8,12 +8,25 @@ import {Firebase} from './../util/Firebase';
 
 export class WhatsAppController {
     constructor(){
+        this._firebase = new Firebase();
+        this.initAuth();
         this.elemetsProtoType();
         this.loadElements();
         this.initEvents();
-        this._firebase = new Firebase();
         
     }
+initAuth(){
+    this._firebase.initAuth().then(response=>{
+       this._user = response.user;
+       this.el.appContent.css({
+           display:'flex'
+       })
+    })
+    .catch(err=>{
+        console.error(err);
+    })
+}
+
 loadElements(){
     this.el = {};
     document.querySelectorAll('[id]').forEach(element =>{
