@@ -23,12 +23,6 @@ export class Firebase{
                 window._initializedFirebase = true;
         }
     }
-    static db(){
-        return firebase.firestore();
-    }
-    static hd(){
-        return firebase.storage();
-    } 
     initAuth(){
 
         return new Promise((resolve, reject)=>{
