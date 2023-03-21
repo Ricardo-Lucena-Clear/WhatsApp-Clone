@@ -5,6 +5,7 @@ import {DocumentPreviewController} from './DocumentPreviewController'
 import {Firebase} from './../util/Firebase';
 import { User } from '../model/User';
 import {Model} from '../model/Model';
+import { Chat } from '../model/Chat';
 
 
 
@@ -254,9 +255,15 @@ elemetsProtoType(){
             let contact = new User(formData.get('email'));
             contact.on('datachange', data=>{
                 if (data.name){
-                    this._user.addContact(contact).then(()=>{
+                    Chat.createIfNotExists(this._user.email, contact.email).then(chat =>{
+                        contact.chatId = chat.id;
+                        this._user.chatId = chat.id;
+                        contact.addContact(this._user);
+                        this._user.addContact(contact).then(()=>{
                         this.el.btnClosePanelAddContact.click();
                         console.info('Contato foi adicionado!')
+                    })
+                    
                     });
                 }else {
                     console.error('Usuario não foi encontrado')
