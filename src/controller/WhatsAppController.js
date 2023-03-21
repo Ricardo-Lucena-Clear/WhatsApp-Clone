@@ -129,6 +129,7 @@ initAuth(){
             photo2.src = data.photo;
             photo2.show();
         }
+        this.initContacts();
     });
     this._user.name = response.displayName;
     this._user.email = response.email;

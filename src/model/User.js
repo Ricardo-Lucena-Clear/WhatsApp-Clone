@@ -3,6 +3,11 @@ import { Firebase } from './../util/Firebase'
 
 export class User extends Model {
 
+    constructor(id){
+
+        super();
+        if (id) this.getById(id);
+    }
     get name() { return this._data.name; }
     set name(value) { this._data.name = value; }
 
@@ -15,85 +20,45 @@ export class User extends Model {
     get chatId() { return this._data.chatId; }
     set chatId(value) { this._data.chatId = value; }
 
-    static getRef(){
-        return Firebase.db().collection('users');
+    getById(id){
+    
+        return new Promise((s, f)=>{
+            User.findByEmail(id).onSnapshot(doc => {
+                this.fromJSON(doc.data());
+                s(doc);
+            });
+        });
     }
-
-    constructor(key){
-        
-        super();
-
-        this.key = key;
-
-        this.getByKey();
-
+    save(){
+        return User.findByEmail(this.email).set(this.toJSON());
+    }
+    static getRef(){
+        return Firebase.db().collection('/users');
     }
     static getContactsRef(id) {
-
         return User.getRef()
         .doc(id)
         .collection('contacts')        
-
     }
-
     static findByEmail(email){
-
         return User.getRef().doc(email);
     }
-    getByKey(){
-
-        return new Promise((s, f)=>{
-
-            User.getRef().doc(this.key).onSnapshot(doc => {
-
-                this.doc = doc;
-
-                this.fromJSON(doc.data());
-
-                s(doc);
-
-            });
-
-        });        
-
-    }
-
-    save(){
-
-        return User.getRef().doc(this.key).set(this.toJSON());
-
-    }
-
     addContact(contact){
-
-        return User.getRef().doc(this.key).collection('contacts').doc(contact.email).set(contact.toJSON());
-
+        return User.getContactsRef(this.email).doc(btoa(contact.email)).set(contact.toJSON());
     }
-
-    getContacts(){
-
+    getContacts(filter = ''){
         return new Promise((s, f)=>{
-
-            User.getRef().doc(this.key).collection('contacts').onSnapshot(docs => {
-
+            User.getContactsRef(this.email).where('name', '>=', filter).onSnapshot(docs => {
                 let contacts = [];
-
-                docs.forEach(doc=>{
-
+                console.log(docs);
+                docs.forEach(doc => {
                     let data = doc.data();
-                    data._key = doc.key;
-                    contacts.push(data);
-
+                    data.id = doc.id;
+                    contacts.push(data); 
                 });
-
-                s(docs);
-
-                this.trigger('contactschange', contacts);
-
+                this.trigger('contactschange', docs);
+                s(contacts);
             });
-
-        });        
-
+        });
     }
-
 }
