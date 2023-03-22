@@ -113,22 +113,15 @@ export class Message extends Model {
                     </div>
                                         
                 `;
-                element.querySelector('.message-photo').on('load', function(){
+                div.querySelector('.message-photo').on('load', e=>{
 
-                    this.show();
-
-                    element.querySelector('._34Olu').hide();
-
-                    element.querySelector('._3v3PK').css({
+                    div.querySelector('.message-photo').show();
+                    div.querySelector('._34Olu').hide();
+                    div.querySelector('._3v3PK').css({
                         height: 'auto'
                     });
 
-                }).on('click', function(){
-
-                    window.open(this.src);
-
                 });
-
 
                 break;
 
