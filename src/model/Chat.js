@@ -1,24 +1,17 @@
-import { Firebase } from "../util/Firebase";
-import { Model } from "./Model";
+import { Model } from './../util/Model'
+import { Firebase } from './../util/Firebase'
 
 export class Chat extends Model {
 
+    get users() { return this._data.users; }
+    set users(value) { this._data.users = value; }
+
     constructor(){
-        super();
-    }
 
-    get users() {this._data.users; }
-    set users(value) {this._data.users = value; }
 
-    get timeStamp() {this._data.timeStamp; }
-    set timeStamp(value) {this._data.timeStamp = value; }
-
-    static getRef(){
-
-        return Firebase.db().collection('/chats')
 
     }
-
+    
     static create(meEmail, contactEmail){
 
         return new Promise((s, f)=>{
@@ -45,38 +38,39 @@ export class Chat extends Model {
 
     }
 
-    static find(meEmail, contactEmail){
-
-        return Chat.getRef()
-            .where(btoa(meEmail), '==', true)
-            .where(btoa(contactEmail), '==', true)
-            .get();
-
+    static getRef() {
+        return Firebase.db().collection('chats');
     }
 
-    static createIfNotExists(meEmail, contactEmail){
+    static find(meEmail, contactEmail){
+        return Chat.getRef().where(`users.${btoa(meEmail)}`, '==', true).where(`users.${btoa(contactEmail)}`, '==', true).get();
+    }
 
-        return new Promise((s, f)=>{
+    static createIfNotExists(meEmail, contactEmail) {
+
+        return new Promise((s, f) => {
 
             Chat.find(meEmail, contactEmail).then(chats => {
 
                 if (chats.empty) {
 
-                    Chat.create(meEmail, contactEmail).then(chat=>{
+                    Chat.create(meEmail, contactEmail).then(chat => {
 
                         s(chat);
 
-                    });
+                    }).catch(err => { f(err); });
 
                 } else {
 
-                    chats.forEach(chat=>{
+                    chats.forEach(chat => {
+
                         s(chat);
+
                     });
 
                 }
 
-            }).catch(err=>{ f(err) });
+            }).catch(err => { f(err); });
 
         });
 

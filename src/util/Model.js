@@ -1,5 +1,4 @@
-import {Model} from './../model/User'
-import { ClassEvent } from "../util/ClassEvent";
+import { ClassEvent } from "./ClassEvent";
 
 export class Model extends ClassEvent {
 

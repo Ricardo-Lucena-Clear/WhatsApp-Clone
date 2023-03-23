@@ -1,5 +1,5 @@
 {
-  "name": "curso-javascript-projeto-whatsapp-clone-master",
+  "name": "curso-javascript-projeto-whatsapp-clone",
   "version": "1.0.0",
   "description": "[![Hcode Treinamentos](https://www.hcode.com.br/res/img/hcode-200x100.png)](https://www.hcode.com.br)",
   "main": "index.js",
@@ -10,14 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ricardo-Lucena-Clear/WhatsApp-Clone.git"
+    "url": " "
   },
-  "author": "",
+  "author": "Hcode Treinamentos",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Ricardo-Lucena-Clear/WhatsApp-Clone/issues"
-  },
-  "homepage": "https://github.com/Ricardo-Lucena-Clear/WhatsApp-Clone#readme",
   "devDependencies": {
     "webpack": "^3.1.0",
     "webpack-dev-server": "^2.5.1",
@@ -25,8 +21,6 @@
   },
   "dependencies": {
     "firebase": "^4.13.1",
-    "pdfjs-dist": "^2.0.489",
-    "webpack": "^3.1.0",
-    "webpack-dev-server": "^2.5.1"
+    "pdfjs-dist": "^2.0.489"
   }
 }
